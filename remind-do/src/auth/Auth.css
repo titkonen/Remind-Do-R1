@@ -1,0 +1,18 @@
+.sign-out {
+   background-color: lavender;
+   margin: auto;
+ }
+
+ .input {
+   margin: 0px 12px 12px 0px;
+   outline: none;
+   border: none;
+   border-radius: 8px;
+   font-size: 13px;
+   padding: 8px;
+   box-shadow: 2px 2px 5px #ddd;
+}
+
+.label {
+   padding-left: 12px;
+}

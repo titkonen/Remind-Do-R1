@@ -1,0 +1,10 @@
+.add-reminder {
+  margin: 16px 8px 16px 8px;
+  width: 320px;
+}
+
+.float-button {
+  float: right;
+  position: relative;
+  top: -56px;
+}

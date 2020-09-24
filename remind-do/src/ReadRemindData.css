@@ -1,0 +1,26 @@
+.action-buttons {
+   float: right;
+   position: relative;
+   top: -40px;
+   padding-right: 8px;
+ }
+
+ .remind-wrapper {
+    background-color: #f2f2f2;
+    /* background-color: blue; */
+    height: 40px;
+    padding: 4px 8px 18px 8px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+ }
+
+ /* iPhone 8 */
+ @media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 667px)
+and (orientation : portrait) { 
+   .remind-wrapper {
+      background-color: red !important;
+   }
+
+}
