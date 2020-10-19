@@ -8,3 +8,31 @@
   position: relative;
   top: -56px;
 }
+
+.menu-icon {
+  color: #fff !important;
+}
+
+ /* iPhone 8 */
+ @media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 667px)
+and (orientation : portrait) { 
+   .MuiAppBar-colorPrimary {
+      /* background-color: #000 !important; */
+   }
+}
+
+/* iPad Landscape */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)
+and (orientation : landscape) { 
+   .MuiAppBar-colorPrimary {
+      /* background-color: #444 !important; */
+      /* width: 1024px !important; */
+      /* position: relative;
+      top: 0px;
+      left: -100px; */
+   }
+}

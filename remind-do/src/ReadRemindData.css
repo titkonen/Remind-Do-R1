@@ -20,7 +20,8 @@ and (min-device-width : 375px)
 and (max-device-width : 667px)
 and (orientation : portrait) { 
    .remind-wrapper {
-      background-color: red !important;
+      background-color: #eee;
+      padding: 16px 0px 32px 8px;
    }
 
 }

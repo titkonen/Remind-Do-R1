@@ -5,15 +5,16 @@ import '../App.css';
 import '../RemindersList';
 
 // For Routing
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Link } from "react-router-dom";
 import RemindersList from "../RemindersList";
 
 const Home = () => {
+  
    return (
       <Router>
-         <p>This is home.</p>
+         {/* <p>This is home.</p> */}
          <div>
-            <nav className="sub-navigation">
+            {/* <nav className="sub-navigation">
                <ul className="sub-navigation-links">
                   <li>
                      <Link
@@ -24,10 +25,9 @@ const Home = () => {
                      </Link>
                   </li>
                </ul>
-            </nav>
+            </nav> */}
             
             <RemindersList />
-
 
          {/* SWITCHER */}
             <Switch>
@@ -45,9 +45,6 @@ const Home = () => {
               
             </Route> */}
          </Switch>
-
-
-         
 
          </div>
       </Router>

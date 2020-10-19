@@ -5,8 +5,8 @@ import { AuthContext } from "./Auth.js";
 import './Auth.css';
 import '../App.css';
 import firebase from '../firebase';
-
-
+import { Button } from '@material-ui/core/';
+import hero from '../Assets/Remind-hero.png';
 
 const Login = ({ history }) => {
    const handleLogin = useCallback(
@@ -34,34 +34,27 @@ const Login = ({ history }) => {
    return (
       <div>
          <div className="header">
-            <h1 className="heading">Log in to Remind-Do R1</h1>
-         </div>
-         {/* <h2 className="subheading-center">Bike data and maintenance application</h2>
-         <p className="content-about">TrailHero is bicycle data gathering and maintenance application. You can mark down easily your bicycle related data and keep update your bicycle maintenance schedules and task lists.</p>
-          */}
-         <div className=" mb-48 text-center">
-         {/* <h2 className="subheading-center">Log in</h2> */}
-            <form onSubmit={handleLogin}>
-               <input className="input" name="email" type="email" placeholder="Email" />
-               {/* <label className="#">
-                  Email
-                  <input className="input" name="email" type="email" placeholder="Email" />
-               </label> */}
-               <input className="input" name="password" type="password" placeholder="Password" />
-               {/* <label>
-                  password
-                  <input className="input" name="password" type="password" placeholder="Password" />
-               </label> */}
-               {/* <button type="submit">Log in</button> */}
-               <button
-                  type="submit"
-                  variant="primary"
-               >Log in
-               </button>
-
-            </form>
-         </div>
+         <div className="hero-img">
+            <img
+               src={hero}
+               // className="hero-img"
+               alt="Hero"
+            /> 
+         </div>   
          
+            <h1 className="heading-auth">Simple tasklist app</h1>
+         </div>
+         <p className="ingress-auth">This is easy tasklist application for you to keep on track your daily todo list's and other important topics.</p>
+         <div className="form-container">
+            <h2 className="subheading-auth">Log in</h2>
+            <div className="form-auth">
+               <form onSubmit={handleLogin}>
+                  <input className="input" name="email" type="email" placeholder="Email" />
+                  <input className="input" name="password" type="password" placeholder="Password" />
+                  <Button type="submit" variant="contained" color="primary">Log in</Button>
+               </form>
+            </div>
+         </div>   
       </div>
    );
 };

@@ -2,11 +2,7 @@ import React from 'react';
 import firebase from './firebase';
 import './App.css';
 import { ReadRemindData } from './ReadRemindData';
-import {
-  Container,
-  Fab,
-  TextField
-} from '@material-ui/core/';
+import { Container, Fab, TextField } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 
 // MD Icons

@@ -1,36 +1,30 @@
 import React from 'react';
 import firebase from './firebase';
 import './App.css';
-import { ReadRemindData } from './ReadRemindData';
+// import { ReadRemindData } from './ReadRemindData';
 // import CssBaseline from '@material-ui/core/CssBaseline';
-import {
-  // BottomNavigation,
-  // BottomNavigationAction,
-  Container,
-  AppBar,
-  Toolbar,
-  Fab,
-  TextField,
-  Typography
-} from '@material-ui/core/';
-import { makeStyles } from '@material-ui/core/styles';
 
 // For Auth imports
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./auth/Home";
 import Login from "./auth/Login";
 import SignUp from "./auth/SignUp";
-import { AuthContext, AuthProvider } from './auth/Auth';
+import { AuthProvider } from './auth/Auth';
 import PrivateRoute from "./auth/PrivateRoute";
 
 // Views
 import WelcomeView from './Views/WelcomeView';
 
+// For MD
+import clsx from 'clsx';
+import { Container, AppBar, Toolbar, Typography, Drawer, Divider, ListItem, ListItemIcon, ListItemText, IconButton } from '@material-ui/core/';
+import { makeStyles } from '@material-ui/core/styles';
+
 // MD Icons
-import AddIcon from '@material-ui/icons/Add';
-// import RestoreIcon from '@material-ui/icons/Restore';
-// import FavoriteIcon from '@material-ui/icons/Favorite';
-// import LocationOnIcon from '@material-ui/icons/LocationOn';
+import MenuIcon from '@material-ui/icons/Menu';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,62 +43,108 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    // width: 'auto',
+    width: 200,
+    // backgroundColor: 'red'
+  },
 }));
+
 
 function App() {
   const classes = useStyles();
   const [reminds, setReminds] = React.useState([]); 
-  const [newRemindText, setNewRemindText] = React.useState(); 
-  // const [value, setValue] = React.useState(); // MD BottomNavigation needs that?
+  // const [newRemindText, setNewRemindText] = React.useState(); 
+  const [state, setState] = React.useState({
+    left: false
+  });
+  const [title, setTitle] = React.useState(); // For drawer navigation
 
-  React.useEffect(() => {
-    const db = firebase.firestore();
-    return db.collection('remind-do').orderBy('remind').onSnapshot((snapshot) => {
-      const remindData = [];
-      snapshot.forEach(doc => remindData.push({...doc.data(), id: doc.id }));
-      setReminds(remindData);
-    });
-}, []);
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
 
-  const addReminder = () => {
-    const db = firebase.firestore();
-    db.collection('remind-do').add({
-      remind: newRemindText,
-      completed: ""
-    });
-    console.log(newRemindText);
-  }
+   // Drawer Menu
+   const list = (anchor) => (
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === 'left' || anchor === 'bottom',
+      })}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+     
+
+        <ListItem button component={Link} to="/login" onClick={DrawerLink('Login')}>
+          {/* <ListItemIcon><ExitToApp /></ListItemIcon> */}
+          <ListItemText>Login</ListItemText>
+        </ListItem>
+
+        <ListItem button component={Link} to="/signup" onClick={DrawerLink('Sign Up')}>
+          {/* <ListItemIcon><InboxIcon /></ListItemIcon> */}
+          <ListItemText>Sign Up</ListItemText>
+        </ListItem>
+
+      <Divider />
+        <ListItem button>
+          <ListItemIcon><ExitToApp /></ListItemIcon>
+          <ListItemText primary="Log out" onClick={() => firebase.auth().signOut()} />
+        </ListItem>
+
+    </div>
+  );
+
+  const DrawerLink = title => () => {
+    setTitle(title);
+    // setDrawer(variant === 'temporary' ? false : drawer);
+    // setDrawer(!drawer);
+  };
 
   return (
     <AuthProvider>
       <Router>
         <div className="#">
+
+    
           
           <Container maxWidth="sm">
             <AppBar position="static">
               <Toolbar>
+
+              <div>
+                {['left'].map((anchor) => (
+                <React.Fragment key={anchor}>
+                  {/* <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button> */}
+                  <IconButton 
+                    onClick={toggleDrawer(anchor, true)}
+                    className={clsx(classes.menuButton)}
+                  ><MenuIcon 
+                      // color={"primary"}
+                      className="menu-icon" 
+                      key={anchor} 
+                    />
+                  </IconButton>
+                  <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                      {list(anchor)}
+                  </Drawer>
+                </React.Fragment>
+                ))}
+              </div>
+
+         
                 <Typography variant="h6" className={classes.title}>
                   Remind + Do. R1
                 </Typography>
-                {/* <Button onClick={addReminder} color="#">Add reminder</Button> */}
-                <ul className="navigation">
-                <li>
-                  <Link
-                    className="navigation"
-                    to="/login">Login
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="navigation"
-                    to="/signup">Sign up
-                  </Link>
-                </li>
-              </ul>
+
               </Toolbar>
             </AppBar>
-
-             
 
               <Switch>
                 <Route path="/login">
@@ -119,45 +159,7 @@ function App() {
                 <PrivateRoute exact path="/" component={Home} />
                 <Route exact path="/signup" component={SignUp} />
               </div>
-
-            <div className="add-reminder">
-              <form className={classes.root} noValidate autoComplete="off">
-                {/* <TextField id="standard-basic" label="Standard" />
-                <TextField id="filled-basic" label="Filled" variant="filled" /> */}
-                <TextField 
-                  id="outlined-basic" 
-                  label="Add reminder" 
-                  variant="outlined" 
-                  value={newRemindText}
-                  onChange={(event) => setNewRemindText(event.target.value)}
-                />
-              </form>
-              <div className="float-button">
-                <Fab color="primary" aria-label="add" size="small" onClick={addReminder}>
-                  <AddIcon />
-                </Fab>
-              </div>
-            </div>    
-
-
-            {reminds.map(muistutukset => (
-              <div className="grid-container" key={muistutukset.remind}>
-                <div className="grid-item"><ReadRemindData muistutukset={muistutukset} /></div>
-              </div>
-          ))}
-
-            {/* <BottomNavigation
-              value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-              showLabels
-              className={classes.root}
-            >
-              <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-              <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-              <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-            </BottomNavigation> */}
+    
           </Container>  
         </div>
       </Router>
