@@ -1,8 +1,9 @@
 import React from 'react';
 import firebase from './firebase';
+import './RemindersList.css';
 import './App.css';
 import { ReadRemindData } from './ReadRemindData';
-import { Container, Fab, TextField } from '@material-ui/core/';
+import { Button, Container, Fab, TextField } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 
 // MD Icons
@@ -13,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: 260,
+      width: 300,
+      
     },
   },
   menuButton: {
@@ -48,7 +50,38 @@ function RemindersList() {
       completed: ""
     });
     console.log(newRemindText);
+    console.log('New reminder tallennettu')
   }
+
+// Order by completed
+const sortByCompleted = () => {
+  const db = firebase.firestore();
+  return db.collection('remind-do').orderBy('completed').onSnapshot((snapshot) => {
+    const remindData = [];
+    snapshot.forEach(doc => remindData.push({...doc.data(), id: doc.id }));
+    setReminds(remindData);
+  });
+};
+
+  // Sorting in DESC order testing
+  const sortByDesc = () => {
+    const db = firebase.firestore();
+    return db.collection('remind-do').orderBy('remind',"desc").onSnapshot((snapshot) => {
+      const remindData = [];
+      snapshot.forEach(doc => remindData.push({...doc.data(), id: doc.id }));
+      setReminds(remindData);
+    });
+ };
+
+  // Sorting in ASC order testing
+  const sortByAsc = () => {
+    const db = firebase.firestore();
+    return db.collection('remind-do').orderBy('remind',"asc").onSnapshot((snapshot) => {
+      const remindData = [];
+      snapshot.forEach(doc => remindData.push({...doc.data(), id: doc.id }));
+      setReminds(remindData);
+    });
+ };
 
   return (
 
@@ -71,6 +104,10 @@ function RemindersList() {
                 </Fab>
               </div>
             </div>    
+
+            <div className="sorting-buttons">
+              <Button color="primary" onClick={sortByCompleted}>Completed</Button><Button color="primary" onClick={sortByAsc}>ASC</Button><Button color="primary" onClick={sortByDesc}>DESC</Button>
+            </div>
 
             {reminds.map(muistutukset => (
               <div className="grid-container" key={muistutukset.remind}>

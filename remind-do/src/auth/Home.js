@@ -1,11 +1,11 @@
 import React from "react";
-import firebase from '../firebase';
+// import firebase from '../firebase';
 import './Auth.css';
 import '../App.css';
 import '../RemindersList';
 
 // For Routing
-import { BrowserRouter as Router, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import RemindersList from "../RemindersList";
 
 const Home = () => {

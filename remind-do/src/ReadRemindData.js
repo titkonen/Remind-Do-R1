@@ -7,7 +7,8 @@ import './ReadRemindData.css';
 // MD Icons
 import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -48,9 +49,9 @@ export const ReadRemindData = ({ muistutukset }) => {
       const db = firebase.firestore()
       db.collection('remind-do').doc(muistutukset.id).set({ 
          ...muistutukset, 
-         completed: "done." 
+         completed: "OK"
       })
-      setCompleted("ok");
+      setCompleted("OK");
       console.log(completed);
    }
 
@@ -68,7 +69,7 @@ export const ReadRemindData = ({ muistutukset }) => {
         </form>
         <div className="action-buttons">
             <IconButton aria-label="edit" size="small" onClick={onUpdate}>
-               <EditIcon />
+               <SaveIcon />
             </IconButton>  
             <IconButton aria-label="delete" size="small" onClick={onDelete}>
                <DeleteIcon />

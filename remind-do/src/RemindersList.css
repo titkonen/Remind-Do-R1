@@ -1,0 +1,16 @@
+.float-button {
+   float: right;
+   position: relative;
+   top: -56px;
+   left: 34px;
+ }
+
+ .add-reminder {
+   margin: 16px 8px 16px 8px;
+   width: 320px;
+ }
+
+.sorting-buttons {
+   /* background-color: aqua; */
+   padding: 16px;
+}

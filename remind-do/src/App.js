@@ -24,15 +24,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: 260,
-    },
+    width: 414,
+    // '& .MuiTextField-root': {
+    //   margin: theme.spacing(1),
+    //   width: 260,
+
+    // },
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -53,10 +53,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function App() {
   const classes = useStyles();
-  const [reminds, setReminds] = React.useState([]); 
+  // const [reminds, setReminds] = React.useState([]); 
   // const [newRemindText, setNewRemindText] = React.useState(); 
   const [state, setState] = React.useState({
     left: false
@@ -80,8 +79,6 @@ function App() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-     
-
         <ListItem button component={Link} to="/login" onClick={DrawerLink('Login')}>
           {/* <ListItemIcon><ExitToApp /></ListItemIcon> */}
           <ListItemText>Login</ListItemText>
@@ -97,52 +94,41 @@ function App() {
           <ListItemIcon><ExitToApp /></ListItemIcon>
           <ListItemText primary="Log out" onClick={() => firebase.auth().signOut()} />
         </ListItem>
-
     </div>
   );
 
   const DrawerLink = title => () => {
     setTitle(title);
-    // setDrawer(variant === 'temporary' ? false : drawer);
-    // setDrawer(!drawer);
   };
 
   return (
     <AuthProvider>
       <Router>
         <div className="#">
-
-    
-          
-          <Container maxWidth="sm">
+          <Container maxWidth="xl">
             <AppBar position="static">
               <Toolbar>
-
-              <div>
-                {['left'].map((anchor) => (
-                <React.Fragment key={anchor}>
-                  {/* <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button> */}
-                  <IconButton 
-                    onClick={toggleDrawer(anchor, true)}
-                    className={clsx(classes.menuButton)}
-                  ><MenuIcon 
-                      // color={"primary"}
-                      className="menu-icon" 
-                      key={anchor} 
-                    />
-                  </IconButton>
-                  <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-                      {list(anchor)}
-                  </Drawer>
-                </React.Fragment>
-                ))}
-              </div>
-
-         
+                <div>
+                  {['left'].map((anchor) => (
+                  <React.Fragment key={anchor}>
+                    {/* <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button> */}
+                    <IconButton 
+                      onClick={toggleDrawer(anchor, true)}
+                      className={clsx(classes.menuButton)}
+                    ><MenuIcon 
+                        className="menu-icon" 
+                        key={anchor} 
+                      />
+                    </IconButton>
+                    <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                        {list(anchor)}
+                    </Drawer>
+                  </React.Fragment>
+                  ))}
+                </div>
                 <Typography variant="h6" className={classes.title}>
-                  Remind + Do. R1
+                  Remind + Do.
                 </Typography>
-
               </Toolbar>
             </AppBar>
 

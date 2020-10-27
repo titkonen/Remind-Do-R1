@@ -46,10 +46,10 @@ const Login = ({ history }) => {
          </div>
          <p className="ingress-auth">This is easy tasklist application for you to keep on track your daily todo list's and other important topics.</p>
          <div className="form-container">
-            <h2 className="subheading-auth">Log in</h2>
             <div className="form-auth">
+            <h2>Log in</h2>
                <form onSubmit={handleLogin}>
-                  <input className="input" name="email" type="email" placeholder="Email" />
+                  <input className="input" name="email" type="email" placeholder="Email" autoComplete="off"/>
                   <input className="input" name="password" type="password" placeholder="Password" />
                   <Button type="submit" variant="contained" color="primary">Log in</Button>
                </form>
