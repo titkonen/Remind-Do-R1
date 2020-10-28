@@ -33,6 +33,7 @@ function RemindersList() {
   const classes = useStyles();
   const [reminds, setReminds] = React.useState([]); 
   const [newRemindText, setNewRemindText] = React.useState(); 
+  const [clearInputField, setClearInputField] = React.useState('');
 
   React.useEffect(() => {
     const db = firebase.firestore();
@@ -83,18 +84,42 @@ const sortByCompleted = () => {
     });
  };
 
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      addReminder();
+      clearField();
+    }
+  }
+
+  const clearField = () => {
+    //HTMLFormElement.reset();
+//    setClearInputField('');
+    //document.getElementById("myForm").reset();
+    //let tyhja = useRef(null);
+    //value='';
+    
+  }
+
+
   return (
 
         <div className="#">
           <Container maxWidth="sm">
 
             <div className="add-reminder">
-              <form className={classes.root} noValidate autoComplete="off">
+              <form id="myForm" className={classes.root} noValidate autoComplete="off">
                 <TextField 
                   id="outlined-basic" 
                   label="Add reminder" 
                   variant="outlined" 
+                  required
                   value={newRemindText}
+                  onKeyDown={onKeyDown}
+                  autocomplete="off"
+                  ref={clearField}
+                  
                   onChange={(event) => setNewRemindText(event.target.value)}
                 />
               </form>
